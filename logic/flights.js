@@ -1,14 +1,16 @@
-function Flights()
+module.exports = function flights()
 {    
-    let calcFlights = function calculateNumberOfFlights(numberOfPassengers, flightCapacity) 
-    {       
+    
+    function calculateNumberOfFlights(numberOfPassengers, flightCapacity)
+    {
+     
         let numberOfFlights =0;
-        alert("inside calcFlights");
-        if ((numberOfPassengers <= 0)&&(!Number.isInteger(numberOfPassengers)))  {
-            throw new Error("The number of passengers must be a positive integer");            
+        
+        if ((numberOfPassengers <= 0) || (!Number.isInteger(numberOfPassengers)))  {
+            throw new Error("The number of passengers must be a positive integer value");            
         }
-        if ((flightCapacity <= 0)&&(!Number.isInteger(numberOfPassengers))) {
-            throw new Error("The capacity of the flight must be a positive integer");            
+        if ((flightCapacity <= 0) || (!Number.isInteger(flightCapacity))) {
+            throw new Error("The capacity of the flight must be a positive integer value");            
         }
         else if (numberOfPassengers % flightCapacity == 0)
                 numberOfFlights= (numberOfPassengers / flightCapacity);
@@ -18,9 +20,9 @@ function Flights()
         return numberOfFlights;       
     }
            
-    let checkDistance = function checkAircraftRevision(distanceLimit, arrDistance) 
+    function checkAircraftRevision(distanceLimit, arrDistance) 
     {         
-        alert("inside function2");
+        
         let totalDistance = 0;
 
         for (let i = 0; i < arrDistance.length; i++)
@@ -38,10 +40,11 @@ function Flights()
         else if (totalDistance > distanceLimit)
             throw new Error("Total Distance exceeds the distance limit");
     } 
-    return {calculateNumberOfFlights, checkAircraftRevision};    
+    
+    return {calculateNumberOfFlights, checkAircraftRevision};   
+       
 }
-
-module.exports ={Flights};
+//{flights};
 //export default {Flights};
 
 

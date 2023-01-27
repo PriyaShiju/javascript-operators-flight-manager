@@ -1,5 +1,6 @@
-function Passengers() {
-    let capacity = function checkFlightCapacity(flightCapacity,arrPassengers) 
+module.exports = function passengers()
+{
+    function checkFlightCapacity(flightCapacity,arrPassengers) 
     {
         let totalPassengers = 0;
 
@@ -11,63 +12,76 @@ function Passengers() {
         else 
             throw new Error ("Number of Passengers exceeds Flight Capacity");
     }
-    let distributeseats = function distributeAllSeatsToAllPassengers
-    (nrOfVIPPassengers,nrOfRegularPassengers, nrOfFlights,nrOfBusinessSeats, nrOfEconomySeats)
-    {
-         let objDistributedSeats;
-         objDistributedSeats.vipPassengersWithBusinessSeats=0, objDistributedSeats.vipPassengersWithEconomySeats=0;
-         objDistributedSeats.regularPassengersWithBusinessSeats=0, objDistributedSeats.regularPassengersWithEconomySeats=0;
-
-        if ((nrOfBusinessSeats>0) || (nrOfEconomySeats>0))
-        {
-            if (nrOfBusinessSeats >= nrOfVIPPassengers)
-            {
-                for(let i=0; i<nrOfVIPPassengers; i++)
-                {
-                    console.log("Business seat is assigned to VIP Passenger "+i+1);
-                    objDistributedSeats.vipPassengersWithBusinessSeats++;
-                    nrOfBusinessSeats--;
-                }
-                if  (nrOfRegularPassengers >0) //if still Business seats are available
-                {
-                    for(let i=0; i<nrOfRegularPassengers; i++)
-                    {
-                        if (nrOfBusinessSeats >0)
-                        {
-                            console.log("Business seat is assigned to Regular Passenger "+i+1);
-                            objDistributedSeats.regularPassengersWithBusinessSeats++;
-                            nrOfBusinessSeats--;
-                        }
-                        else if (nrOfEconomySeats >0)
-                        {
-                            console.log("Economy seat is assigned to Regular Passenger "+i+1);
-                            objDistributedSeats.regularPassengersWithEconomySeats++;
-                            nrOfEconomySeats--;
-                        }
-                    } 
-                }               
-            }
-            else if (nrOfBusinessSeats < nrOfVIPPassengers)             {                
-                for(let i=0; i<nrOfVIPPassengers; i++)
-                {
-                    if (nrOfBusinessSeats >0)
-                    {
-                        console.log("Business seat is assigned to VIP Passenger "+i+1);
-                        objDistributedSeats.vipPassengersWithBusinessSeats++;
-                        nrOfBusinessSeats--;
-                    }
-                    else if (nrOfEconomySeats >0)
-                    {
-                        console.log("Economy seat is assigned to VIP Passenger "+i+1);
-                        objDistributedSeats.this.vipPassengersWithEconomySeats++;
-                        nrOfEconomySeats--;
-                    }
-                }       
-            } 
-            return objDistributedSeats;
-        }
-    }//end of function distributeAllSeatsToAllPassengers
     
+    function distributeAllSeatsToAllPassengers(nrOfVIPPassengers,nrOfRegularPassengers, nrOfFlights,nrOfBusinessSeatsPerFlight, nrOfEconomySeatsPerFlight)
+    {
+         
+         this.vipPassengersWithBusinessSeats=0;
+         this.vipPassengersWithEconomySeats=0;
+         this.regularPassengersWithBusinessSeats=0;
+         this.regularPassengersWithEconomySeats=0;
+
+         nrOfBusinessSeats = nrOfBusinessSeatsPerFlight * nrOfFlights;
+         nrOfEconomySeats = nrOfEconomySeatsPerFlight * nrOfFlights;    
+
+         
+         console.log("VIP & Business seat " + nrOfVIPPassengers + " ," + nrOfBusinessSeats + ", " +nrOfBusinessSeatsPerFlight );
+         this.vipPassengersWithBusinessSeats = AllocateSeats(nrOfVIPPassengers,nrOfBusinessSeats,nrOfBusinessSeatsPerFlight);
+        
+        console.log("VIP & Economy seat " + nrOfVIPPassengers + ", " + nrOfEconomySeats + " ," +nrOfEconomySeatsPerFlight );
+        this.vipPassengersWithEconomySeats=AllocateSeats(nrOfVIPPassengers,nrOfEconomySeats,nrOfEconomySeatsPerFlight);
+
+        console.log("Regular & Business seat " + nrOfEconomySeats + ", " + nrOfBusinessSeats + ", " +nrOfBusinessSeatsPerFlight );
+        this.regularPassengersWithBusinessSeats= AllocateSeats(nrOfRegularPassengers,nrOfBusinessSeats,nrOfBusinessSeatsPerFlight);
+
+        console.log("Regular & Economy seat " + nrOfEconomySeats + ", " + nrOfEconomySeats + ", " +nrOfEconomySeatsPerFlight );
+        this.regularPassengersWithEconomySeats = AllocateSeats(nrOfRegularPassengers,nrOfEconomySeats,nrOfEconomySeatsPerFlight); 
+       
+        return this;
+               
+    }
+
+     function  AllocateSeats(nrOfPassengers,nrOfSeats, nrSeatsPerFlight)
+    {
+        let passengerAllocatedSeats=0;
+        
+        while(nrOfPassengers > 0)
+        {
+            if (nrOfSeats >0)
+            {
+                if (nrOfPassengers >= nrOfSeats)
+                {
+                    if (nrOfSeats > nrSeatsPerFlight)
+                    {                        
+                        nrOfPassengers -= nrSeatsPerFlight;                        
+                        passengerAllocatedSeats += nrSeatsPerFlight;
+                        nrOfSeats -= nrSeatsPerFlight;
+                        //console.log("nrOfSeats > nrSeatsPerFlight" + passengerAllocatedSeats);
+                    }
+                    else
+                    {                        
+                        nrOfPassengers -= nrOfSeats;                    
+                        passengerAllocatedSeats += nrOfSeats;
+                        nrOfSeats = 0;
+                        //console.log("else nrOfSeats > nrSeatsPerFlight" + passengerAllocatedSeats);
+                    }
+                }
+                else
+                {               
+                        
+                    nrOfSeats -= nrOfPassengers;
+                    passengerAllocatedSeats += nrOfPassengers;
+                    nrOfPassengers = 0;
+                    //console.log("nrOfPassengers >= nrOfSeats" + passengerAllocatedSeats);
+                }
+            }
+            else
+                break;
+        }
+
+        return passengerAllocatedSeats;
+    } 
+    return {checkFlightCapacity, distributeAllSeatsToAllPassengers};   
 }
 
-module.exports = {Passengers};
+//module.exports = {passengers};

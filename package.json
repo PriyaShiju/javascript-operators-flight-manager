@@ -2,7 +2,8 @@
   "name": "javascript-syntax-operators",
   "version": "1.0.0",
   "description": "JavaScript Syntax and Operators",
-  "main": "script.js",
+  "main": "frontend.js",
+  
   "scripts": {
     "start": "lite-server",
     "test": "mocha './test/**/*.test.js'"
@@ -16,6 +17,8 @@
     "es6": "^0.0.7",
     "esm": "^3.2.25",
     "mocha": "^7.0.1",
-    "modules": "^0.4.0"
+    "module": "^1.2.5",
+    "modules": "^0.4.0",
+    "nodejs": "^0.0.0"
   }
 }

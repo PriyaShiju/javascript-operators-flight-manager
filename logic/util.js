@@ -1,5 +1,6 @@
-function Util() {
-    let totalPassengers = function calculateTotalDistributedPassengers(objDistributedSeats) 
+module.exports = function util() 
+{
+     function calculateTotalDistributedPassengers(objDistributedSeats) 
     {
         let totalDistributedPassengers =0;
         for (let i=0;i<objDistributedSeats.length;i++)
@@ -9,14 +10,17 @@ function Util() {
         return totalDistributedPassengers;
 
     }
-    function calculateTotalNumberOfPassengers(arrNumbers){
+    function calculateTotalNumberOfPassengers(arrNumbers)
+    {
         let totalPassengers =0;
-        for (let i=0;i<arrNumbers.length;i++)
-        {
-            totalPassengers +=arrNumbers[i].value;
+        if (arrNumbers.length>0){
+            for (let i=0;i<arrNumbers.length;i++)
+            {
+                totalPassengers +=arrNumbers[i].value;
+            }
         }
         return totalPassengers;
     }
     return {calculateTotalDistributedPassengers, calculateTotalNumberOfPassengers}; 
 }
-module.exports = {Util};
+//module.exports = {util};

@@ -1,10 +1,12 @@
 "use strict"
 
 var assert = require('assert');
-var flights = require('../logic/flights');
-var passengers = require('../logic/passengers');
-var util = require('../logic/util');
-
+var flights = require('../logic/flights.js');
+var passengers = require('../logic/passengers.js');
+var util = require('../logic/util.js');
+flights = new flights();
+util = new util();
+passengers = new passengers();
 
 describe('Test flights number', function() {
    it('should calculate the number of flights. @calculate_flights', function() {

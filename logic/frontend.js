@@ -1,19 +1,23 @@
 "use strict"
 
-var flights = require('../logic/flights');
-var util = require('../logic/util');
-var passengers = require('../logic/passengers');
-/*
-import Flights from '../logic/flights';
-import Util from '../logic/util';
-import Passengers from '../logic/passengers';*/
+var Flights = require('../logic/flights.js');
+var Util = require('../logic/util.js');
+var Passengers = require('../logic/passengers.js');
 
+Flights = new Flights();
+//Util = new Util();
+//Passengers = new Passengers();
+
+/*
+import Flights from '../logic/flights.js';
+import Util from '../logic/util.js';
+import Passengers from '../logic/passengers.js';*/
 
 function onCalculateNumberOfFlights() {
     let passengers = document.getElementById('passengers').value;
     let capacity = document.getElementById('capacity').value;
     try {
-        let flights = Flights().calculateNumberOfFlights.calculateNumberOfFlights(passengers, capacity);
+        let flights = Flights.calculateNumberOfFlights(passengers, capacity);
         document.getElementById('flights').innerHTML = "You will need " + flights +
             " flight(s) to carry " + passengers + " passengers";
     } catch (error) {
